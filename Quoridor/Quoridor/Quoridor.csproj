@@ -35,6 +35,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,11 +45,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Controllers\Services\PathService.cs" />
+    <Compile Include="Models\MapObjects\Block.cs" />
+    <Compile Include="Models\MapObjects\Cell.cs" />
+    <Compile Include="Models\Map\Map.cs" />
+    <Compile Include="Models\Players\Player.cs" />
+    <Compile Include="Models\Shared\Graph.cs" />
+    <Compile Include="Models\Shared\Position.cs" />
+    <Compile Include="Models\Shared\Result.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Views\FormView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ViewModels\BlockButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\ViewModels\CellButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\ViewModels\PositionButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\FormView.resx">
+      <DependentUpon>FormView.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
