@@ -80,6 +80,7 @@ namespace Quoridor.Views
             currentPlayer = map.Players.First();
             var standingCell = GetCellButtonByPosition(currentPlayer.Position);
             standingCell.IsPlayersTurn = true;
+            this.Refresh();
         }
 
         private PositionButton CreateCellButton(string name, Position position, int x, int y, Color? playerColor = null)
@@ -147,7 +148,7 @@ namespace Quoridor.Views
             BlockButton block = sender as BlockButton;
             var placeOfSecondPart = this.GetSecondBlockPlacePosition(block.Position, block.IsHorizontal);
 
-            var result = _controller.PostPlayerBlock(map, currentPlayer, new[] { block.Position, placeOfSecondPart });
+            var result = _controller.PostPlayerBlock(map, currentPlayer, block.Position, placeOfSecondPart );
             if (!result.IsSuccess)
             {
                 ShowPopup("You can't place block there due to rules", "Mistake");

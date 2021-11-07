@@ -1,59 +1,135 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic; 
 
 namespace Quoridor.Controllers.Services
 {
     class PathService
     {
-        public class dijstra
+        public class Graph
         {
-            public dijstra(double[,] G, int s)
-            {
-                initial(0, s);
-                while (queue.Count > 0)
-                {
-                    int u = getNextVertex();
 
-                    for (int i = 0; i < s; i++)
+            private readonly int _size;
+            private readonly int[,] _edges;
+            private LinkedList<int>[] _adjacencyList;
+
+            public Graph(int size)
+            {
+                _size = size * size;
+                _edges = new int[2 * size * (size - 1), 2];
+
+                int edgeId = 0;
+                for (var v = 0; v < _size; v++)
+                {
+                    if (v - 1 >= 0 && (v % size != 0))
                     {
-                        if (G[u, i] > 0)
-                            if (dist[i] > dist[u] + G[u, i])
-                                dist[i] = dist[u] + G[u, i];
+                        _edges[edgeId, 0] = v - 1;
+                        _edges[edgeId, 1] = v;
+                        edgeId++;
+                    }
+                    if (v - size >= 0)
+                    {
+                        _edges[edgeId, 0] = v - size;
+                        _edges[edgeId, 1] = v;
+                        edgeId++;
                     }
                 }
+                MakeAdjacencyList();
             }
-            public double[] dist { get; set; }
-            int getNextVertex()
-            { 
-                var min = double.PositiveInfinity;
-                int vertex = -1;
 
-                foreach (int val in queue)
+            private void MakeAdjacencyList()
+            {
+                _adjacencyList = new LinkedList<int>[_size];
+
+                for (int i = 0; i < _adjacencyList.GetLength(0); ++i)
                 {
-                    if (dist[val] <= min)
+                    _adjacencyList[i] = new LinkedList<int>();
+                }
+
+                for (int i = 0; i < _edges.GetLength(0); i++)
+                {
+                    AddEdge(_edges[i, 0], _edges[i, 1]);
+                }
+            }
+
+            public bool AddEdge(int vertex1, int vertex2)
+            {
+                if (_adjacencyList[vertex1].AddLast(vertex2) != null
+                    && _adjacencyList[vertex2].AddLast(vertex1) != null)
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            public bool RemoveEdge(int vertex1, int vertex2) =>
+                _adjacencyList[vertex1].Remove(vertex2) &&
+                _adjacencyList[vertex2].Remove(vertex1);
+
+            public int[] GetEdgesForVertex(int vertex)
+            {
+                LinkedList<int> list = _adjacencyList[vertex];
+                int[] edgs = new int[list.Count];
+                list.CopyTo(edgs, 0);
+                return edgs;
+            }
+
+            public bool CheckPaths(int from, int[] to)
+            {
+                var dists = DijkstraAlgorithm(from);
+                for (int i = 0; i < to.GetLength(0); i++)
+                {
+                    if (dists[to[i]] != int.MaxValue)
                     {
-                        min = dist[val];
-                        vertex = val;
+                        return true;
                     }
                 }
-                queue.Remove(vertex);
-                return vertex;
+                return false;
             }
 
-            List<int> queue = new List<int>();
-            public void initial(int s, int len)
+            public bool HasPath(int from, int to)
             {
-                dist = new double[len];
+                var dists = DijkstraAlgorithm(from);
+                return dists[to] != int.MaxValue;
+            }
 
-                for (int i = 0; i < len; i++)
+            private int[] DijkstraAlgorithm(int startVertex)
+            {
+                int[] distances = new int[_size];
+                bool[] used = new bool[_size];
+
+                for (int i = 0; i < _size; i++)
                 {
-                    dist[i] = double.PositiveInfinity;
-                    queue.Add(i);
+                    distances[i] = int.MaxValue;
                 }
-                dist[0] = 0;
+
+                distances[startVertex] = 0;
+                for (var i = 0; i < _size; i++)
+                {
+                    int curr = -1;
+                    for (var j = 0; j < _size; j++)
+                    {
+                        if (!used[j] && (curr == -1 || distances[j] < distances[curr]))
+                        {
+                            curr = j;
+                        }
+                    }
+
+                    if (distances[curr] == int.MaxValue)
+                    {
+                        break;
+                    }
+
+                    used[curr] = true;
+
+                    LinkedList<int> list = _adjacencyList[curr];
+                    foreach (int vertex in list)
+                    {
+                        if (distances[curr] + 1 < distances[vertex])
+                        {
+                            distances[vertex] = distances[curr] + 1;
+                        }
+                    }
+                }
+                return distances;
             }
         }
     }

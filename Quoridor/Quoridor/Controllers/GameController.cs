@@ -15,7 +15,7 @@ namespace Quoridor.Controllers
         {
             return new Result<Map>(true, map);
         }
-        public Result<Map> PostPlayerBlock(Map map, Player player, Position[] blockPositions)
+        public Result<Map> PostPlayerBlock(Map map, Player player, Position blockPosition1, Position blockPosition2)
         {
             return new Result<Map>(true, map);
         }
