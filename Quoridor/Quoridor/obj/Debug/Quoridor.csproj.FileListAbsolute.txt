@@ -1,0 +1,9 @@
+D:\Projects\!C# projects\Quoridor\Quoridor\Quoridor\bin\Debug\Quoridor.exe.config
+D:\Projects\!C# projects\Quoridor\Quoridor\Quoridor\bin\Debug\Quoridor.exe
+D:\Projects\!C# projects\Quoridor\Quoridor\Quoridor\bin\Debug\Quoridor.pdb
+D:\Projects\!C# projects\Quoridor\Quoridor\Quoridor\obj\Debug\Quoridor.Views.FormView.resources
+D:\Projects\!C# projects\Quoridor\Quoridor\Quoridor\obj\Debug\Quoridor.csproj.GenerateResource.cache
+D:\Projects\!C# projects\Quoridor\Quoridor\Quoridor\obj\Debug\Quoridor.csproj.CoreCompileInputs.cache
+D:\Projects\!C# projects\Quoridor\Quoridor\Quoridor\obj\Debug\Quoridor.exe
+D:\Projects\!C# projects\Quoridor\Quoridor\Quoridor\obj\Debug\Quoridor.pdb
+D:\Projects\!C# projects\Quoridor\Quoridor\Quoridor\obj\Debug\Quoridor.csproj.AssemblyReference.cache
