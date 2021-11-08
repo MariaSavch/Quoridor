@@ -1,2 +1,2 @@
 # Quoridor
-Two days challenge
+
